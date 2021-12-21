@@ -23,5 +23,5 @@ General version 1.17.1 <br>
 - lang.yml - Texts that plugin will use
 - players.yml - Stored data about players
 <br>
-<b>Placeholders</b>
+<b>Placeholders</b><br>
 - %playerlives_currentAmount% - Returns current amount of player lives
