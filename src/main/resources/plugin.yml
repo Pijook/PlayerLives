@@ -1,5 +1,5 @@
 name: PlayerLives
-version: 1.0.0
+version: 1.0.1
 api-version: 1.17
 main: pl.pijok.playerlives.PlayerLives
 author: Pijok

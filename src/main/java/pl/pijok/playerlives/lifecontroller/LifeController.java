@@ -138,6 +138,7 @@ public class LifeController {
 
     public void kill(String nickname){
         playerLives.get(nickname).setDeathTime(System.currentTimeMillis());
+        playerLives.get(nickname).setLives(Settings.livesAfterResurrection);
         LivesEndEvent livesEndEvent = new LivesEndEvent(nickname, playerLives.get(nickname).getCurrentLives());
         Bukkit.getPluginManager().callEvent(livesEndEvent);
     }
