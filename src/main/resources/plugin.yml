@@ -1,0 +1,15 @@
+name: PlayerLives
+version: 1.0.0
+api-version: 1.17
+main: pl.pijok.playerlives.PlayerLives
+author: Pijok
+softdepend:
+  - PlaceholderAPI
+commands:
+  playerlives:
+    usage: /playerlives
+    description: Used to modify lives of players or to reload plugin
+    aliases: [playerl, lives, plives]
+  resurrect:
+    usage: /resurrect
+    description: Used to resurrect player and give him life

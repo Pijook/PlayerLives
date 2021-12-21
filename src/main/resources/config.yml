@@ -1,0 +1,29 @@
+#Starting amount of player lifes
+defaultLivesAmount: 3
+
+#Max amount
+maxLives: 10
+
+#Allow players to eat items to gain a life
+eatingEnabled: true
+
+#Should player be banned from server forever
+permanentDeath: false
+
+#Death time in hours
+deathTime: 2
+
+#Should players be able to resurrect another player
+resurrectionEnabled: true
+
+#Amount of lives needed for resurrections
+resurrectionCost: 1
+
+#Amount of lives resurrected player will have after resurrection
+livesAfterResurrection: 1
+
+#Items that will give player lives
+#Here diamond will restore 1 life and diamond block 3 lives
+eatableItems:
+  DIAMOND: 1
+  DIAMOND_BLOCK: 3
