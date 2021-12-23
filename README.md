@@ -1,7 +1,7 @@
 # Player Lives
 
 Plugin for managing player lives on minecraft servers
-General version 1.17.1
+General miencraft server version 1.17.1
 
 ## Commands
 
@@ -21,9 +21,9 @@ General version 1.17.1
 
 ## Configuration files
 
-- [General settings for plugin](src/main/resources/config.yml) - General settings for plugin
-- [Texts that plugin will use](src/main/resources/lang.yml) - Texts that plugin will use
-- [Stored data about players](src/main/resources/players.yml) - Stored data about players
+- [src/main/resources/config.yml](src/main/resources/config.yml) - General settings for plugin
+- [src/main/resources/lang.yml](src/main/resources/lang.yml) - Texts that plugin will use
+- [src/main/resources/players.yml](src/main/resources/players.yml) - Stored data about players
 
 ## Placeholders
 
