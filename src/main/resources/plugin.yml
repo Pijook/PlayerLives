@@ -1,6 +1,5 @@
 name: PlayerLives
-version: 1.0.1
-api-version: 1.17
+version: 1.0.2
 main: pl.pijok.playerlives.PlayerLives
 author: Pijok
 softdepend:
