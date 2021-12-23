@@ -18,6 +18,10 @@ public class DeathListener implements Listener {
     public void onDeath(PlayerDeathEvent event){
         Player player = event.getEntity().getPlayer();
 
+        if(player.hasPermission("playerlives.bypass.death")){
+            return;
+        }
+
         lifeController.takeLives(null, player.getName(), 1);
 
         if(lifeController.getPlayerLives(player.getName()) <= 0){
