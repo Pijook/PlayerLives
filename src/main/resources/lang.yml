@@ -18,3 +18,6 @@ lang:
   RESURRECT_NOT_ENOUGH_LIVES: "&aYou don't have enough lives to resurrect someone!"
   RESURRECT_ALREADY_ALIVE: "&cThis players is already alive!"
   RESURRECT_DISABLED: "&cResurrection is currently disabled!"
+  LIFE_BOUGHT: "&aYou just bought a life!"
+  NOT_ENOUGH_MONEY: "&cYou don't have enough money!"
+  BUYING_LIVES_DISABLED: "&cThis option is currently disabled!"

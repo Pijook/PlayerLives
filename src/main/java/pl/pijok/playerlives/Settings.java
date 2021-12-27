@@ -20,6 +20,8 @@ public class Settings {
     public static boolean resurrectionEnabled;
     public static int resurrectionCost;
     public static int livesAfterResurrection;
+    public static boolean buyableLives;
+    public static double liveCost;
 
     public static void load(){
         YamlConfiguration configuration = ConfigUtils.load("config.yml");
@@ -34,6 +36,8 @@ public class Settings {
         resurrectionEnabled = configuration.getBoolean("resurrectionEnabled");
         resurrectionCost = configuration.getInt("resurrectionCost");
         livesAfterResurrection = configuration.getInt("livesAfterResurrection");
+        buyableLives = configuration.getBoolean("buyableLives");
+        liveCost = configuration.getDouble("lifeCost");
 
         for(String materialName : configuration.getConfigurationSection("eatableItems").getKeys(false)){
             if(!Utils.isMaterial(materialName)){

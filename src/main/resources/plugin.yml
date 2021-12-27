@@ -1,9 +1,10 @@
 name: PlayerLives
-version: 1.0.2
+version: 1.0.3
 main: pl.pijok.playerlives.PlayerLives
 author: Pijok
 softdepend:
   - PlaceholderAPI
+  - Vault
 commands:
   playerlives:
     usage: /playerlives
@@ -12,3 +13,6 @@ commands:
   resurrect:
     usage: /resurrect
     description: Used to resurrect player and give him life
+  buylife:
+    usage: /buylife
+    description: Used to buy life for money

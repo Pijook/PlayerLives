@@ -6,7 +6,7 @@
 
     <groupId>pl.pijok</groupId>
     <artifactId>PlayerLives</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -24,6 +24,11 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -35,12 +40,23 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- PlaceholderAPI -->
+
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.11.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Vault -->
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

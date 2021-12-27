@@ -1,5 +1,6 @@
 package pl.pijok.playerlives;
 
+import pl.pijok.playerlives.commands.BuyLifeCommand;
 import pl.pijok.playerlives.commands.LivesCommand;
 import pl.pijok.playerlives.commands.ResurrectCommand;
 
@@ -9,6 +10,7 @@ public class Commands {
 
         plugin.getCommand("playerlives").setExecutor(new LivesCommand());
         plugin.getCommand("resurrect").setExecutor(new ResurrectCommand());
+        plugin.getCommand("buylife").setExecutor(new BuyLifeCommand());
 
     }
 

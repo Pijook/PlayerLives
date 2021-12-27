@@ -1,6 +1,8 @@
 package pl.pijok.playerlives;
 
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.pijok.playerlives.essentials.ConfigUtils;
 import pl.pijok.playerlives.essentials.Debug;
@@ -8,6 +10,7 @@ import pl.pijok.playerlives.essentials.Debug;
 public class PlayerLives extends JavaPlugin {
 
     private static PlayerLives instance;
+    private static Economy economy;
 
     @Override
     public void onEnable() {
@@ -24,6 +27,10 @@ public class PlayerLives extends JavaPlugin {
         else{
             Debug.log("&aEverything loaded!");
             Debug.log("&aHave a nice day :D");
+        }
+
+        if (!setupEconomy()){
+            Debug.log("&cCouldn't find vault! Some functions might be disabled");
         }
 
     }
@@ -69,7 +76,24 @@ public class PlayerLives extends JavaPlugin {
         return true;
     }
 
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        economy = rsp.getProvider();
+        return economy != null;
+    }
+
+
     public static PlayerLives getInstance() {
         return instance;
+    }
+
+    public static Economy getEconomy() {
+        return economy;
     }
 }
