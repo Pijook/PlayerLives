@@ -1,11 +1,14 @@
-#Starting amount of player lifes
-defaultLivesAmount: 3
+#Type of punishment after losing all of lives
+#EXILE - Prevents player from joining server
+#COMMAND - Preconfigured command is executed
+#DROP_ITEMS - Drops all player items
+#MONEY - Takes some  money
+#NONE - Nothing
+deathPunishment: EXILE
 
-#Max amount
-maxLives: 10
-
-#Allow players to eat items to gain a life
-eatingEnabled: true
+#=========================================
+#======= Exile punishment settings =======
+#=========================================
 
 #Should player be banned from server forever
 permanentDeath: false
@@ -19,8 +22,35 @@ resurrectionEnabled: true
 #Amount of lives needed for resurrections
 resurrectionCost: 1
 
-#Amount of lives resurrected player will have after resurrection
-livesAfterResurrection: 1
+#=========================================
+#====== Command punishment settings ======
+#=========================================
+
+#Command executed after losing all lives
+#You can set multiple commands
+punishmentCommands:
+  - "broadcast %player% just lost all lives!"
+
+#==== Drop items punishment settings ====
+
+#Should items be dropped to world or just inventory be cleared
+dropToWorld: true
+
+#=========================================
+#======= Money punishment settings =======
+#=========================================
+
+#Vault and economy plugin must be installed to use this punishment
+
+#Amount that will be taken from player after losing all livse
+moneyToTake: 500.0
+
+#Punishment that will be used if player don't have enough money
+notEnoughMoneyPunishment: EXILE
+
+#=========================================
+#============ Lives settings =============
+#=========================================
 
 #Should players be able to buy additional live for money
 buyableLives: true
@@ -34,3 +64,17 @@ lifeCost: 500
 eatableItems:
   DIAMOND: 1
   DIAMOND_BLOCK: 3
+
+#Starting amount of player lifes
+defaultLivesAmount: 3
+
+#Max amount
+maxLives: 10
+
+#Allow players to eat items to gain a life
+eatingEnabled: true
+
+#Amount of lives resurrected player will have after resurrection
+livesAfterPunishment: 1
+
+#=====================================

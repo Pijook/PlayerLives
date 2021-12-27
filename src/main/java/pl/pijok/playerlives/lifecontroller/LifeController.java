@@ -1,10 +1,13 @@
 package pl.pijok.playerlives.lifecontroller;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import pl.pijok.playerlives.Lang;
+import pl.pijok.playerlives.PlayerLives;
 import pl.pijok.playerlives.Settings;
 import pl.pijok.playerlives.customEvents.LifeAddEvent;
 import pl.pijok.playerlives.customEvents.LifeSetEvent;
@@ -136,9 +139,53 @@ public class LifeController {
         return -999;
     }
 
-    public void kill(String nickname){
-        playerLives.get(nickname).setDeathTime(System.currentTimeMillis());
-        playerLives.get(nickname).setLives(Settings.livesAfterResurrection);
+    public void punishPlayer(Player player, PunishmentType punishmentType){
+        String nickname = player.getName();
+        String message = Lang.getLang("DEATH_INFO");
+
+        if(punishmentType.equals(PunishmentType.EXILE)){
+            playerLives.get(nickname).setDeathTime(System.currentTimeMillis());
+        }
+        else if(punishmentType.equals(PunishmentType.COMMAND)){
+            for(String command : Settings.punishmentCommands){
+                command = command.replace("%player%", nickname);
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+            }
+        }
+        else if(punishmentType.equals(PunishmentType.MONEY)){
+            if(PlayerLives.getEconomy().getBalance(player) < Settings.moneyToTake){
+                punishPlayer(player, Settings.notEnoughMoneyPunishment);
+            }
+            else{
+                PlayerLives.getEconomy().withdrawPlayer(player, Settings.moneyToTake);
+            }
+        }
+        else if(punishmentType.equals(PunishmentType.DROP_ITEMS)){
+            if(Settings.dropToWorld){
+                for(ItemStack itemStack : player.getInventory()){
+                    if(itemStack == null || itemStack.getType().equals(Material.AIR)){
+                        continue;
+                    }
+
+                    player.getWorld().dropItem(player.getLocation(), itemStack);
+                }
+            }
+            else{
+                player.getInventory().clear();
+            }
+        }
+        else if(punishmentType.equals(PunishmentType.NONE)){
+            //Nothing
+        }
+
+        if(punishmentType.equals(PunishmentType.EXILE)) {
+            player.kickPlayer(ChatUtils.fixColor(message));
+        }
+        else{
+            ChatUtils.sendMessage(player, message);
+        }
+
+        playerLives.get(nickname).setLives(Settings.livesAfterPunishment);
         LivesEndEvent livesEndEvent = new LivesEndEvent(nickname, playerLives.get(nickname).getCurrentLives());
         Bukkit.getPluginManager().callEvent(livesEndEvent);
     }
@@ -163,7 +210,7 @@ public class LifeController {
 
     public void resurrectPlayer(String donator, String nickname){
         playerLives.get(nickname).setDeathTime(-1);
-        playerLives.get(nickname).setLives(Settings.livesAfterResurrection);
+        playerLives.get(nickname).setLives(Settings.livesAfterPunishment);
         if(donator != null){
             playerLives.get(donator).takeLives(Settings.resurrectionCost);
         }

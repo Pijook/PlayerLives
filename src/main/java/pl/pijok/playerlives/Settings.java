@@ -6,36 +6,86 @@ import org.bukkit.inventory.ItemStack;
 import pl.pijok.playerlives.essentials.ConfigUtils;
 import pl.pijok.playerlives.essentials.Debug;
 import pl.pijok.playerlives.essentials.Utils;
+import pl.pijok.playerlives.lifecontroller.PunishmentType;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Settings {
 
+    public static PunishmentType punishmentType = PunishmentType.EXILE;
+
+    //Lives settings
     public static int defaultLivesAmount;
     public static int maxLives;
     public static boolean eatingEnabled;
-    public static boolean permanentDeath;
-    public static int deathTime;
     public static HashMap<Material, Integer> eatableMaterials;
     public static boolean resurrectionEnabled;
     public static int resurrectionCost;
-    public static int livesAfterResurrection;
+    public static int livesAfterPunishment;
     public static boolean buyableLives;
     public static double liveCost;
+
+    //Exile settings
+    public static boolean permanentDeath;
+    public static int deathTime;
+
+    //Command settings
+    public static List<String> punishmentCommands;
+
+    //Drop items settings
+    public static boolean dropToWorld;
+
+    //Money settings
+    public static double moneyToTake;
+    public static PunishmentType notEnoughMoneyPunishment;
+
 
     public static void load(){
         YamlConfiguration configuration = ConfigUtils.load("config.yml");
 
         eatableMaterials = new HashMap<>();
 
+        String punishment = configuration.getString("deathPunishment");
+
+        if(!Utils.isPunishmentType(punishment)){
+            Debug.log("&cWrong death punishment type! Check config.yml deathPunishment!");
+            Debug.log("&cDefault value will be set (EXILE)");
+        }
+        else{
+            punishmentType = PunishmentType.valueOf(punishment);
+        }
+
+        //Loading exile
+        permanentDeath = configuration.getBoolean("permanentDeath");
+        deathTime = configuration.getInt("deathTime");
+
+        //Loading command
+        punishmentCommands = configuration.getStringList("punishmentCommands");
+
+        //Loading drop items
+        dropToWorld = configuration.getBoolean("dropToWorld");
+
+        //Loading money
+        moneyToTake = configuration.getDouble("moneyToTake");
+        String notEnoughMoneyPunishmentString = configuration.getString("notEnoughMoneyPunishment");
+
+        if(!Utils.isPunishmentType(notEnoughMoneyPunishmentString)){
+            Debug.log("&cWrong death punishment type! Check config.yml notEnoughMoneyPunishment!");
+            Debug.log("&cDefault value will be set (EXILE)");
+            notEnoughMoneyPunishment = PunishmentType.EXILE;
+        }
+        else{
+            notEnoughMoneyPunishment = PunishmentType.valueOf(notEnoughMoneyPunishmentString);
+        }
+
+        //Loading lives settings
         defaultLivesAmount = configuration.getInt("defaultLivesAmount");
         maxLives = configuration.getInt("maxLives");
         eatingEnabled = configuration.getBoolean("eatingEnabled");
-        permanentDeath = configuration.getBoolean("permanentDeath");
-        deathTime = configuration.getInt("deathTime");
         resurrectionEnabled = configuration.getBoolean("resurrectionEnabled");
         resurrectionCost = configuration.getInt("resurrectionCost");
-        livesAfterResurrection = configuration.getInt("livesAfterResurrection");
+        livesAfterPunishment = configuration.getInt("livesAfterPunishment");
         buyableLives = configuration.getBoolean("buyableLives");
         liveCost = configuration.getDouble("lifeCost");
 

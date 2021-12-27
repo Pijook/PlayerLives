@@ -13,7 +13,7 @@ lang:
   CURRENT_LIVES_OTHER: "&e%name% &acurrently have &e%amount% &alives!"
   PERMISSION_DENIED: "&cPermission denied!"
   PLAYER_NOT_FOUND: "&cPlayer not found!"
-  DEATH_INFO: "&cYou are dead!"
+  DEATH_INFO: "&cYou lost all lives!"
   RESURRECT_SUCCESSFUL: "&aPlayer %name% is now alive!"
   RESURRECT_NOT_ENOUGH_LIVES: "&aYou don't have enough lives to resurrect someone!"
   RESURRECT_ALREADY_ALIVE: "&cThis players is already alive!"
