@@ -1,6 +1,7 @@
 package pl.pijok.playerlives;
 
 import net.milkbowl.vault.economy.Economy;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,6 +12,10 @@ public class PlayerLives extends JavaPlugin {
 
     private static PlayerLives instance;
     private static Economy economy;
+
+    //bStats
+    private static int pluginID = 13755;
+    private static Metrics metrics;
 
     @Override
     public void onEnable() {
@@ -32,6 +37,9 @@ public class PlayerLives extends JavaPlugin {
         if (!setupEconomy()){
             Debug.log("&cCouldn't find vault! Some functions might be disabled");
         }
+
+        metrics = new Metrics(this, pluginID);
+        Debug.log("&aHooked to bStats! Thanks for support!");
 
     }
 
