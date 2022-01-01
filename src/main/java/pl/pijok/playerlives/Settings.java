@@ -9,6 +9,7 @@ import pl.pijok.playerlives.essentials.Utils;
 import pl.pijok.playerlives.lifecontroller.PunishmentType;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Settings {
@@ -26,6 +27,8 @@ public class Settings {
     public static int livesAfterPunishment;
     public static boolean buyableLives;
     public static double liveCost;
+    public static boolean maxLivesPermissionBased;
+    public static LinkedHashMap<String, Integer> maxLivesPermissions;
 
     //Exile settings
     public static boolean permanentDeath;
@@ -47,6 +50,7 @@ public class Settings {
 
         eatableMaterials = new HashMap<>();
         eatableCustomMaterials = new HashMap<>();
+        maxLivesPermissions = new LinkedHashMap<>();
 
         String punishment = configuration.getString("deathPunishment");
 
@@ -90,6 +94,7 @@ public class Settings {
         livesAfterPunishment = configuration.getInt("livesAfterPunishment");
         buyableLives = configuration.getBoolean("buyableLives");
         liveCost = configuration.getDouble("lifeCost");
+        maxLivesPermissionBased = configuration.getBoolean("maxLivesPermissionBased");
 
         for(String materialName : configuration.getConfigurationSection("eatableItems").getKeys(false)){
             if(!Utils.isMaterial(materialName)){
@@ -102,6 +107,10 @@ public class Settings {
 
         for(String itemID : configuration.getConfigurationSection("eatableCustomItems").getKeys(false)){
             eatableCustomMaterials.put(itemID, configuration.getInt("eatableCustomItems." + itemID));
+        }
+
+        for(String permission : configuration.getConfigurationSection("maxLivesPermissions").getKeys(false)){
+            maxLivesPermissions.put(permission, configuration.getInt("maxLivesPermissions." + permission));
         }
     }
 

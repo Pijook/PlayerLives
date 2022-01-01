@@ -9,6 +9,11 @@ import pl.pijok.playerlives.lifecontroller.LifeController;
 public class Placeholders extends PlaceholderExpansion {
 
     private final LifeController lifeController = Controllers.getLifeController();
+    private final PlayerLives plugin;
+
+    public Placeholders(PlayerLives plugin){
+        this.plugin = plugin;
+    }
 
     @Override
     public @NotNull String getIdentifier() {
@@ -22,7 +27,7 @@ public class Placeholders extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return PlayerLives.getInstance().getDescription().getVersion();
+        return plugin.getDescription().getVersion();
     }
 
     @Override

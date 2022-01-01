@@ -53,12 +53,12 @@ public class LifeController {
         ConfigUtils.save(configuration, "players.yml");
     }
 
-    public void addLives(CommandSender sender, String nickname, int amount){
+    public boolean addLives(CommandSender sender, String nickname, int amount){
         if(!playerLives.containsKey(nickname)){
             if(sender != null){
                 ChatUtils.sendMessage(sender, Lang.getLang("PLAYER_NOT_FOUND"));
             }
-            return;
+            return false;
         }
 
         playerLives.get(nickname).addLives(amount);
@@ -79,14 +79,15 @@ public class LifeController {
 
         LifeAddEvent lifeAddEvent = new LifeAddEvent(nickname, amount);
         Bukkit.getPluginManager().callEvent(lifeAddEvent);
+        return true;
     }
 
-    public void takeLives(CommandSender sender, String nickname, int amount){
+    public boolean takeLives(CommandSender sender, String nickname, int amount){
         if(!playerLives.containsKey(nickname)){
             if(sender != null){
                 ChatUtils.sendMessage(sender, Lang.getLang("PLAYER_NOT_FOUND"));
             }
-            return;
+            return false;
         }
 
         playerLives.get(nickname).takeLives(amount);
@@ -107,14 +108,15 @@ public class LifeController {
 
         LifeTakeEvent lifeTakeEvent = new LifeTakeEvent(nickname, amount);
         Bukkit.getPluginManager().callEvent(lifeTakeEvent);
+        return true;
     }
 
-    public void setLives(CommandSender sender, String nickname, int value){
+    public boolean setLives(CommandSender sender, String nickname, int value){
         if(!playerLives.containsKey(nickname)){
             if(sender != null){
                 ChatUtils.sendMessage(sender, Lang.getLang("PLAYER_NOT_FOUND"));
             }
-            return;
+            return false;
         }
 
         playerLives.get(nickname).setLives(value);
@@ -130,6 +132,7 @@ public class LifeController {
 
         LifeSetEvent lifeSetEvent = new LifeSetEvent(nickname, value);
         Bukkit.getPluginManager().callEvent(lifeSetEvent);
+        return true;
     }
 
     public int getPlayerLives(String nickname){

@@ -11,7 +11,6 @@ import pl.pijok.playerlives.essentials.Debug;
 
 public class PlayerLives extends JavaPlugin {
 
-    private static PlayerLives instance;
     private static Economy economy;
 
     //bStats
@@ -20,7 +19,6 @@ public class PlayerLives extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        instance = this;
 
         Debug.setPrefix("[PlayerLives] ");
         ConfigUtils.setPlugin(this);
@@ -61,7 +59,7 @@ public class PlayerLives extends JavaPlugin {
                 Controllers.getLifeController().load();
 
                 if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
-                    new Placeholders().register();
+                    new Placeholders(this).register();
                     Debug.log("&aFound PlaceholderAPI! Hooking...");
                 }
                 else{
@@ -96,11 +94,6 @@ public class PlayerLives extends JavaPlugin {
         }
         economy = rsp.getProvider();
         return economy != null;
-    }
-
-
-    public static PlayerLives getInstance() {
-        return instance;
     }
 
     public static Economy getEconomy() {

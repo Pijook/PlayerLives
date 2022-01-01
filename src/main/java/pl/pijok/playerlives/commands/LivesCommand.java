@@ -17,6 +17,10 @@ import javax.naming.ldap.Control;
 public class LivesCommand implements CommandExecutor {
 
     private final LifeController lifeController = Controllers.getLifeController();
+    private final PlayerLives plugin;
+    public LivesCommand(PlayerLives plugin){
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -30,7 +34,7 @@ public class LivesCommand implements CommandExecutor {
                 }
 
                 ChatUtils.sendMessage(sender, "&eReloading!");
-                if(PlayerLives.getInstance().loadStuff(true)){
+                if(plugin.loadStuff(true)){
                     ChatUtils.sendMessage(sender, "&aReloaded!");
                 }
                 else{

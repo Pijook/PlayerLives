@@ -9,5 +9,8 @@
         <module name="PlayerLives" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="PlayerLivesAPI" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

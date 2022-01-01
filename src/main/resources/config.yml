@@ -73,7 +73,17 @@ eatableCustomItems:
 defaultLivesAmount: 3
 
 #Max amount
+#If you want to set max lives per permission change 'maxLivesPermissionBased' to true and then
+#configure maxLivesPermissions
+maxLivesPermissionBased: false
 maxLives: 10
+
+#Remember to write from highest to lowest number
+#If player won't have any of these permissions standard 'maxLives' value will be used
+maxLivesPermissions:
+  10: playerlives.maxlives.10
+  5: playerlives.maxlives.5
+  1: playerlives.maxlives.1
 
 #Allow players to eat items to gain a life
 eatingEnabled: true
