@@ -4,12 +4,15 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import pl.pijok.playerlives.Controllers;
 import pl.pijok.playerlives.Lang;
 import pl.pijok.playerlives.PlayerLives;
 import pl.pijok.playerlives.essentials.ChatUtils;
 import pl.pijok.playerlives.essentials.Utils;
 import pl.pijok.playerlives.lifecontroller.LifeController;
+
+import javax.naming.ldap.Control;
 
 public class LivesCommand implements CommandExecutor {
 
@@ -112,6 +115,38 @@ public class LivesCommand implements CommandExecutor {
                 lifeController.setLives(sender, nickname, Integer.parseInt(args[2]));
                 return true;
             }
+            //Give heart
+            else if(args[0].equalsIgnoreCase("giveHeart")){
+                if(!checkPermission(sender, "playerlives.giveheart")){
+                    ChatUtils.sendMessage(sender, Lang.getLang("PERMISSION_DENIED"));
+                    return true;
+                }
+
+                if(!Utils.isInteger(args[2])){
+                    ChatUtils.sendMessage(sender, "&cAmount must be number!");
+                    return true;
+                }
+
+                int amount = Integer.parseInt(args[2]);
+                String itemID = args[1];
+
+                if(!Controllers.getItemController().getCustomItems().containsKey(itemID)){
+                    ChatUtils.sendMessage(sender, "&cWrong item ID!");
+                    return true;
+                }
+
+                ItemStack itemStack = new ItemStack(Controllers.getItemController().getCustomItems().get(itemID));
+                itemStack.setAmount(amount);
+
+                if(sender instanceof Player){
+                    Player player = (Player) sender;
+                    player.getInventory().addItem(itemStack);
+                }
+                else {
+                    ChatUtils.sendMessage(sender, "&cCommand only for players!");
+                }
+                return true;
+            }
         }
 
         if(checkPermission(sender, "playerlives.check.self")){
@@ -131,6 +166,9 @@ public class LivesCommand implements CommandExecutor {
         }
         if(checkPermission(sender, "playerlives.reload")){
             ChatUtils.sendMessage(sender, "&7/" + label + " reload"); //Done
+        }
+        if(checkPermission(sender, "playerlives.giveheart")){
+            ChatUtils.sendMessage(sender, "&7/" + label + " giveHeart <ID> <amount>");
         }
         return true;
     }

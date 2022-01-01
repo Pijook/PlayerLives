@@ -20,6 +20,7 @@ public class Settings {
     public static int maxLives;
     public static boolean eatingEnabled;
     public static HashMap<Material, Integer> eatableMaterials;
+    public static HashMap<String, Integer> eatableCustomMaterials;
     public static boolean resurrectionEnabled;
     public static int resurrectionCost;
     public static int livesAfterPunishment;
@@ -45,6 +46,7 @@ public class Settings {
         YamlConfiguration configuration = ConfigUtils.load("config.yml");
 
         eatableMaterials = new HashMap<>();
+        eatableCustomMaterials = new HashMap<>();
 
         String punishment = configuration.getString("deathPunishment");
 
@@ -96,6 +98,10 @@ public class Settings {
             }
 
             eatableMaterials.put(Material.valueOf(materialName), configuration.getInt("eatableItems." + materialName));
+        }
+
+        for(String itemID : configuration.getConfigurationSection("eatableCustomItems").getKeys(false)){
+            eatableCustomMaterials.put(itemID, configuration.getInt("eatableCustomItems." + itemID));
         }
     }
 

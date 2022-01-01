@@ -65,6 +65,10 @@ eatableItems:
   DIAMOND: 1
   DIAMOND_BLOCK: 3
 
+#Remember to write 'ID' of your item form customItems.yml
+eatableCustomItems:
+  customHeart: 1
+
 #Starting amount of player lifes
 defaultLivesAmount: 3
 

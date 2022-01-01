@@ -3,6 +3,7 @@ package pl.pijok.playerlives;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.pijok.playerlives.essentials.ConfigUtils;
@@ -19,7 +20,6 @@ public class PlayerLives extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         instance = this;
 
         Debug.setPrefix("[PlayerLives] ");
@@ -55,7 +55,7 @@ public class PlayerLives extends JavaPlugin {
 
         try{
             if(!reload){
-                Controllers.create();
+                Controllers.create(this);
                 Listeners.register(this);
                 Commands.register(this);
                 Controllers.getLifeController().load();
@@ -67,6 +67,8 @@ public class PlayerLives extends JavaPlugin {
                 else{
                     Debug.log("&cPlaceholderAPI not found!");
                 }
+
+                Controllers.getItemController().load();
             }
 
             Debug.log("Loading lang!");

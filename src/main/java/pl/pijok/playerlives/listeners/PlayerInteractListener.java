@@ -13,6 +13,8 @@ import pl.pijok.playerlives.Settings;
 import pl.pijok.playerlives.essentials.ChatUtils;
 import pl.pijok.playerlives.lifecontroller.LifeController;
 
+import java.util.HashMap;
+
 public class PlayerInteractListener implements Listener {
 
     private final LifeController lifeController = Controllers.getLifeController();
@@ -27,10 +29,27 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            if(Settings.eatableMaterials.containsKey(itemStack.getType())){
-                int lives = lifeController.getPlayerLives(player.getName());
-                int toAdd = Settings.eatableMaterials.get(itemStack.getType());
+            HashMap<String, ItemStack> customItems = Controllers.getItemController().getCustomItems();
 
+            int lives = lifeController.getPlayerLives(player.getName());
+            int toAdd = -1;
+
+
+            for(String id : customItems.keySet()){
+                ItemStack customItem = customItems.get(id);
+
+                if(customItem.isSimilar(itemStack)){
+                    toAdd = Settings.eatableCustomMaterials.get(id);
+                }
+            }
+
+            if(toAdd == -1){
+                if(Settings.eatableMaterials.containsKey(itemStack.getType())){
+                    Settings.eatableMaterials.get(itemStack.getType());
+                }
+            }
+
+            if(toAdd != -1){
                 if(lives >= Settings.maxLives){
                     ChatUtils.sendMessage(player, Lang.getLang("MAX_LIVES"));
                     event.setCancelled(true);
@@ -43,6 +62,7 @@ public class PlayerInteractListener implements Listener {
                     player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
                 }
             }
+
         }
     }
 

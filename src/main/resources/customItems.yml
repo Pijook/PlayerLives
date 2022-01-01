@@ -1,0 +1,13 @@
+customItems:
+  firstCustomItem:
+    ID: "customHeart"
+    crafting:
+      - AIR:DIAMOND:AIR
+      - DIAMOND:REDSTONE:DIAMOND
+      - AIR:DIAMOND:AIR
+    result:
+      material: REDSTONE_BLOCK
+      name: "&c&lCustom heart!"
+      amount: 1
+      lore:
+        - "&eUse it to gain another life!"

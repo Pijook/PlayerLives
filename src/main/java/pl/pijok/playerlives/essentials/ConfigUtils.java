@@ -118,7 +118,14 @@ public class ConfigUtils {
      */
     public static ItemStack getItemstack(YamlConfiguration configuration, String path){
 
-        Material material = Material.valueOf(configuration.getString(path + ".material"));
+        String materialName = configuration.getString(path + ".material");
+
+        if(!Utils.isMaterial(materialName)){
+            Debug.sendError("Wrong material name (" + materialName + ") at " + path + ".material");
+            materialName = "DIRT";
+        }
+
+        Material material = Material.valueOf(materialName);
 
         List<String> lore = new ArrayList<String>();
 
