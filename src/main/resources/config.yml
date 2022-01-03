@@ -1,3 +1,37 @@
+#=========================================
+#=========== General settings ============
+#=========================================
+
+#Starting amount of player lifes
+defaultLivesAmount: 3
+
+#If lifesType is set to 'HEARTS' this will count as 10 hearts
+maxLives: 10
+
+#Amount of lives resurrected player will have after resurrection
+livesAfterPunishment: 1
+
+#How lives should be displayed
+#HEARTS - Lives will be used as hearts in player gui (above experience bar)
+#VARIABLE - Lives will be used as variable that can be accessed trough command /lives
+livesType: VARIABLE
+
+#Max amount
+#If you want to set max lives per permission change 'maxLivesPermissionBased' to true and then
+#configure maxLivesPermissions
+maxLivesPermissionBased: false
+
+#Remember to write from highest to lowest number
+#If player won't have any of these permissions standard 'maxLives' value will be used
+maxLivesPermissions:
+  10: playerlives.maxlives.10
+  5: playerlives.maxlives.5
+  1: playerlives.maxlives.1
+
+#=========================================
+#=========== Punishment settings =========
+#=========================================
+
 #Type of punishment after losing all of lives
 #EXILE - Prevents player from joining server
 #COMMAND - Preconfigured command is executed
@@ -7,7 +41,7 @@
 deathPunishment: EXILE
 
 #=========================================
-#======= Exile punishment settings =======
+#============ Exile punishment ===========
 #=========================================
 
 #Should player be banned from server forever
@@ -23,7 +57,7 @@ resurrectionEnabled: true
 resurrectionCost: 1
 
 #=========================================
-#====== Command punishment settings ======
+#========== Command punishment ===========
 #=========================================
 
 #Command executed after losing all lives
@@ -31,13 +65,15 @@ resurrectionCost: 1
 punishmentCommands:
   - "broadcast %player% just lost all lives!"
 
-#==== Drop items punishment settings ====
+#=========================================
+#========= Drop items punishment =========
+#=========================================
 
 #Should items be dropped to world or just inventory be cleared
 dropToWorld: true
 
 #=========================================
-#======= Money punishment settings =======
+#=========== Money punishment ============
 #=========================================
 
 #Vault and economy plugin must be installed to use this punishment
@@ -49,15 +85,29 @@ moneyToTake: 500.0
 notEnoughMoneyPunishment: EXILE
 
 #=========================================
-#============ Lives settings =============
+#============= Life steal ================
+#=========================================
+
+#Should life steal be enabled
+lifeStealEnabled: true
+
+#=========================================
+#============= Buying lives ==============
 #=========================================
 
 #Should players be able to buy additional live for money
 buyableLives: true
 
-#Money cost of life
+#Cost of life
 #that sounds weird D:
 lifeCost: 500
+
+#=========================================
+#============= Gaining lives =============
+#=========================================
+
+#Allow players to eat items to gain a life
+eatingEnabled: true
 
 #Items that will give player lives
 #Here diamond will restore 1 life and diamond block 3 lives
@@ -68,27 +118,5 @@ eatableItems:
 #Remember to write 'ID' of your item form customItems.yml
 eatableCustomItems:
   customHeart: 1
-
-#Starting amount of player lifes
-defaultLivesAmount: 3
-
-#Max amount
-#If you want to set max lives per permission change 'maxLivesPermissionBased' to true and then
-#configure maxLivesPermissions
-maxLivesPermissionBased: false
-maxLives: 10
-
-#Remember to write from highest to lowest number
-#If player won't have any of these permissions standard 'maxLives' value will be used
-maxLivesPermissions:
-  10: playerlives.maxlives.10
-  5: playerlives.maxlives.5
-  1: playerlives.maxlives.1
-
-#Allow players to eat items to gain a life
-eatingEnabled: true
-
-#Amount of lives resurrected player will have after resurrection
-livesAfterPunishment: 1
 
 #=====================================

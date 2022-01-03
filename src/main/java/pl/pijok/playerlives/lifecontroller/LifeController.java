@@ -15,6 +15,7 @@ import pl.pijok.playerlives.customEvents.LifeTakeEvent;
 import pl.pijok.playerlives.customEvents.LivesEndEvent;
 import pl.pijok.playerlives.essentials.ChatUtils;
 import pl.pijok.playerlives.essentials.ConfigUtils;
+import pl.pijok.playerlives.essentials.Debug;
 
 import java.util.HashMap;
 
@@ -26,6 +27,9 @@ public class LifeController {
         playerLives = new HashMap<>();
     }
 
+    /**
+     * Loading stats of all registered players from players.yml configuration file
+     */
     public void load(){
         YamlConfiguration configuration = ConfigUtils.load("players.yml");
 
@@ -38,6 +42,9 @@ public class LifeController {
         }
     }
 
+    /**
+     * Saving stats of all registered players to players.yml configuration file
+     */
     public void save(){
         YamlConfiguration configuration = ConfigUtils.load("players.yml");
 
@@ -53,12 +60,26 @@ public class LifeController {
         ConfigUtils.save(configuration, "players.yml");
     }
 
+    /**
+     * Adding lives to players. Includes Settings.livesType variable
+     * @param sender Sender of command
+     * @param nickname Target
+     * @param amount Amount of lives to add
+     * @return True if operation was successful
+     */
     public boolean addLives(CommandSender sender, String nickname, int amount){
         if(!playerLives.containsKey(nickname)){
             if(sender != null){
                 ChatUtils.sendMessage(sender, Lang.getLang("PLAYER_NOT_FOUND"));
             }
             return false;
+        }
+
+        if(Settings.livesType.equals(LifeType.HEARTS)){
+            Player target = Bukkit.getPlayer(nickname);
+            if(target != null && target.isOnline()){
+                target.setMaxHealth(target.getMaxHealth() + (amount * 2));
+            }
         }
 
         playerLives.get(nickname).addLives(amount);
@@ -77,17 +98,36 @@ public class LifeController {
             ChatUtils.sendMessage(sender, Lang.getLang("ADD_LIVE_SUCCESS").replace("%amount%", "" + amount).replace("%name%", nickname));
         }
 
-        LifeAddEvent lifeAddEvent = new LifeAddEvent(nickname, amount);
+        LifeAddEvent lifeAddEvent = new LifeAddEvent(Bukkit.getOfflinePlayer(nickname), amount, playerLives.get(nickname).getCurrentLives());
         Bukkit.getPluginManager().callEvent(lifeAddEvent);
         return true;
     }
 
+    /**
+     * Takes lives of players. Includes Settings.livesType variable
+     * @param sender Sender of command
+     * @param nickname Target
+     * @param amount Amount of lives to take
+     * @return True if operation was successful
+     */
     public boolean takeLives(CommandSender sender, String nickname, int amount){
         if(!playerLives.containsKey(nickname)){
             if(sender != null){
                 ChatUtils.sendMessage(sender, Lang.getLang("PLAYER_NOT_FOUND"));
             }
             return false;
+        }
+
+        if(Settings.livesType.equals(LifeType.HEARTS)){
+            Player target = Bukkit.getPlayer(nickname);
+            if(target != null && target.isOnline()){
+                if(target.getMaxHealth() - (amount * 2) <= 0){
+                    target.setMaxHealth(1);
+                }
+                else{
+                    target.setMaxHealth(target.getMaxHealth() - (amount * 2));
+                }
+            }
         }
 
         playerLives.get(nickname).takeLives(amount);
@@ -106,17 +146,31 @@ public class LifeController {
             ChatUtils.sendMessage(sender, Lang.getLang("TAKE_LIVE_SUCCESS").replace("%amount%", "" + amount).replace("%name%", nickname));
         }
 
-        LifeTakeEvent lifeTakeEvent = new LifeTakeEvent(nickname, amount);
+        LifeTakeEvent lifeTakeEvent = new LifeTakeEvent(Bukkit.getOfflinePlayer(nickname), amount, playerLives.get(nickname).getCurrentLives());
         Bukkit.getPluginManager().callEvent(lifeTakeEvent);
         return true;
     }
 
+    /**
+     * Sets lives of players. Includes Settings.livesType variable
+     * @param sender Sender of command
+     * @param nickname Target
+     * @param value Amount of lives to set
+     * @return True if operation was successful
+     */
     public boolean setLives(CommandSender sender, String nickname, int value){
         if(!playerLives.containsKey(nickname)){
             if(sender != null){
                 ChatUtils.sendMessage(sender, Lang.getLang("PLAYER_NOT_FOUND"));
             }
             return false;
+        }
+
+        if(Settings.livesType.equals(LifeType.HEARTS)){
+            Player target = Bukkit.getPlayer(nickname);
+            if(target != null || target.isOnline()){
+                target.setMaxHealth(value * 2);
+            }
         }
 
         playerLives.get(nickname).setLives(value);
@@ -130,7 +184,7 @@ public class LifeController {
             ChatUtils.sendMessage(sender, Lang.getLang("SET_LIVES_OTHER").replace("%amount%", "" + value).replace("%name%", nickname));
         }
 
-        LifeSetEvent lifeSetEvent = new LifeSetEvent(nickname, value);
+        LifeSetEvent lifeSetEvent = new LifeSetEvent(target, playerLives.get(nickname).getCurrentLives());
         Bukkit.getPluginManager().callEvent(lifeSetEvent);
         return true;
     }
@@ -189,7 +243,7 @@ public class LifeController {
         }
 
         playerLives.get(nickname).setLives(Settings.livesAfterPunishment);
-        LivesEndEvent livesEndEvent = new LivesEndEvent(nickname, playerLives.get(nickname).getCurrentLives());
+        LivesEndEvent livesEndEvent = new LivesEndEvent(player, playerLives.get(nickname).getCurrentLives());
         Bukkit.getPluginManager().callEvent(livesEndEvent);
     }
 
@@ -217,5 +271,21 @@ public class LifeController {
         if(donator != null){
             playerLives.get(donator).takeLives(Settings.resurrectionCost);
         }
+    }
+
+    public boolean canGetAnotherLive(Player player){
+        int currentLives = playerLives.get(player.getName()).getCurrentLives();
+        if(Settings.livesType.equals(LifeType.HEARTS)){
+            return player.getMaxHealth() < Settings.maxLives * 2;
+        }
+        if(Settings.maxLivesPermissionBased){
+            for(String permission : Settings.maxLivesPermissions.keySet()){
+                if(player.hasPermission(permission)){
+                    int amount = Settings.maxLivesPermissions.get(permission);
+                    return currentLives < amount;
+                }
+            }
+        }
+        return currentLives < Settings.maxLives;
     }
 }

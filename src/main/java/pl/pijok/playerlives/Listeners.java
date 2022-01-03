@@ -8,7 +8,7 @@ public class Listeners {
 
     public static void register(PlayerLives plugin){
 
-        plugin.getServer().getPluginManager().registerEvents(new JoinListener(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new JoinListener(plugin), plugin);
         plugin.getServer().getPluginManager().registerEvents(new DeathListener(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), plugin);
 

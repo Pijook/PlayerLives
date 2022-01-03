@@ -1,5 +1,6 @@
 package pl.pijok.playerlives;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import pl.pijok.playerlives.essentials.ConfigUtils;
 
@@ -11,7 +12,6 @@ public class Lang {
 
     public static void load(){
         lang = new HashMap<>();
-
         YamlConfiguration configuration = ConfigUtils.load("lang.yml");
 
         for(String key : configuration.getConfigurationSection("lang").getKeys(false)){

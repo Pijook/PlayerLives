@@ -43,4 +43,8 @@ public class PlayerLivesAPI {
         return Controllers.getLifeController().getPlayerLives(player.getName());
     }
 
+    public static boolean canHaveAnotherLive(Player player){
+        return Controllers.getLifeController().canGetAnotherLive(player);
+    }
+
 }

@@ -54,7 +54,7 @@ public class PlayerInteractListener implements Listener {
                     ChatUtils.sendMessage(player, Lang.getLang("MAX_LIVES"));
                     event.setCancelled(true);
                 }*/
-                if(checkMaxLives(player, lives)){
+                if(!lifeController.canGetAnotherLive(player)){
                     ChatUtils.sendMessage(player, Lang.getLang("MAX_LIVES"));
                     event.setCancelled(true);
                 }
@@ -70,16 +70,6 @@ public class PlayerInteractListener implements Listener {
         }
     }
 
-    private boolean checkMaxLives(Player player, int currentLives){
-        if(Settings.maxLivesPermissionBased){
-            for(String permission : Settings.maxLivesPermissions.keySet()){
-                if(player.hasPermission(permission)){
-                    int amount = Settings.maxLivesPermissions.get(permission);
-                    return currentLives >= amount;
-                }
-            }
-        }
-        return currentLives >= Settings.maxLives;
-    }
+
 
 }

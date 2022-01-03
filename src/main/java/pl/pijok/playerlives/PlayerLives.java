@@ -17,6 +17,9 @@ public class PlayerLives extends JavaPlugin {
     private static int pluginID = 13755;
     private static Metrics metrics;
 
+    //Update checker
+    private static int spigotResourceID = 98576;
+
     @Override
     public void onEnable() {
 
@@ -38,6 +41,14 @@ public class PlayerLives extends JavaPlugin {
 
         metrics = new Metrics(this, pluginID);
         Debug.log("&aHooked to bStats! Thanks for support!");
+
+        new UpdateChecker(this, spigotResourceID).getVersion(version -> {
+            if (this.getDescription().getVersion().equals(version)) {
+                Debug.log("&aYour version is up to date!");
+            } else {
+                Debug.log("&cThere is new version available! Download it from https://www.spigotmc.org/resources/player-lives.98576/");
+            }
+        });
 
     }
 

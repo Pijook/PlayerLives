@@ -1,5 +1,7 @@
 package pl.pijok.playerlives.customEvents;
 
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -7,12 +9,12 @@ public class LifeSetEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
-    private String nickname;
-    private int amount;
+    private OfflinePlayer player;
+    private int currentAmount;
 
-    public LifeSetEvent(String nickname, int amount){
-        this.nickname = nickname;
-        this.amount = amount;
+    public LifeSetEvent(OfflinePlayer player, int currentAmount){
+        this.player = player;
+        this.currentAmount = currentAmount;
     }
 
     @Override
@@ -24,19 +26,11 @@ public class LifeSetEvent extends Event {
         return HANDLERS;
     }
 
-    public String getNickname() {
-        return nickname;
+    public OfflinePlayer getPlayer() {
+        return player;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public int getCurrentAmount() {
+        return currentAmount;
     }
 }
