@@ -1,6 +1,7 @@
 package pl.pijok.playerlives.customItems;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -26,7 +27,8 @@ public class ItemController {
 
             ItemStack result = ConfigUtils.getItemstack(configuration, "customItems." + itemID + ".result");
 
-            ShapedRecipe shapedRecipe = new ShapedRecipe(result);
+            //ShapedRecipe shapedRecipe = new ShapedRecipe(result);
+            ShapedRecipe shapedRecipe = new ShapedRecipe(new NamespacedKey(plugin, itemID), result);
             shapedRecipe.shape("abc", "def", "ghi");
 
             char[] shapeHelper = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'};

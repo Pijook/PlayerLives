@@ -13,6 +13,7 @@ import pl.pijok.playerlives.essentials.ChatUtils;
 import pl.pijok.playerlives.essentials.Debug;
 import pl.pijok.playerlives.lifecontroller.LifeController;
 import pl.pijok.playerlives.lifecontroller.LifeType;
+import pl.pijok.playerlives.lifecontroller.PunishmentType;
 
 public class DeathListener implements Listener {
 
@@ -41,6 +42,11 @@ public class DeathListener implements Listener {
 
         if(lifeController.getPlayerLives(player.getName()) <= 0){
             lifeController.punishPlayer(player, Settings.punishmentType);
+        }
+        else{
+            if(Settings.punishmentType.equals(PunishmentType.DROP_ITEMS)){
+                event.setKeepInventory(true);
+            }
         }
 
         if(Settings.lifeSteal){

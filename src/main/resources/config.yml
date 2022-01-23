@@ -48,7 +48,10 @@ deathPunishment: EXILE
 permanentDeath: false
 
 #Death time in hours
-deathTime: 2
+deathTime:
+  days: 0
+  hours: 2
+  minutes: 0
 
 #Should players be able to resurrect another player
 resurrectionEnabled: true
@@ -71,6 +74,9 @@ punishmentCommands:
 
 #Should items be dropped to world or just inventory be cleared
 dropToWorld: true
+itemsToIgnore:
+  - DIAMOND_PICKAXE
+  - STONE_PICKAXE
 
 #=========================================
 #=========== Money punishment ============

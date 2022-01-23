@@ -224,11 +224,30 @@ public class LifeController {
                         continue;
                     }
 
+                    if(Settings.itemsToIgnore.contains(itemStack.getType())){
+                        continue;
+                    }
+
                     player.getWorld().dropItem(player.getLocation(), itemStack);
                 }
             }
             else{
-                player.getInventory().clear();
+                if(Settings.itemsToIgnore.size() != 0){
+                    for(ItemStack itemStack : player.getInventory()){
+                        if(itemStack == null || itemStack.getType().equals(Material.AIR)){
+                            continue;
+                        }
+
+                        if(Settings.itemsToIgnore.contains(itemStack.getType())){
+                            continue;
+                        }
+
+                        player.getInventory().remove(itemStack);
+                    }
+                }
+                else{
+                    player.getInventory().clear();
+                }
             }
         }
         else if(punishmentType.equals(PunishmentType.NONE)){

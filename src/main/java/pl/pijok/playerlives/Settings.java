@@ -9,6 +9,7 @@ import pl.pijok.playerlives.essentials.Utils;
 import pl.pijok.playerlives.lifecontroller.LifeType;
 import pl.pijok.playerlives.lifecontroller.PunishmentType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ public class Settings {
 
     //Punishment - Exile
     public static boolean permanentDeath;
-    public static int deathTime;
+    public static double deathTime;
     public static boolean resurrectionEnabled;
     public static int resurrectionCost;
 
@@ -37,6 +38,7 @@ public class Settings {
 
     //Punishment - Drop items
     public static boolean dropToWorld;
+    public static List<Material> itemsToIgnore;
 
     //Punishment - Money
     public static double moneyToTake;
@@ -83,7 +85,9 @@ public class Settings {
 
         //Punishment - Exile
         permanentDeath = configuration.getBoolean("permanentDeath");
-        deathTime = configuration.getInt("deathTime");
+        deathTime = configuration.getDouble("deathTime.hours");
+        deathTime += (double) (configuration.getInt("deathTime.minutes") / 60);
+        deathTime += (configuration.getInt("deathTime.days") * 24);
         resurrectionEnabled = configuration.getBoolean("resurrectionEnabled");
         resurrectionCost = configuration.getInt("resurrectionCost");
 
@@ -92,6 +96,14 @@ public class Settings {
 
         //Punishment - Drop items
         dropToWorld = configuration.getBoolean("dropToWorld");
+        itemsToIgnore = new ArrayList<>();
+        for(String itemID : configuration.getStringList("itemsToIgnore")){
+            if(!Utils.isMaterial(itemID)){
+                Debug.log("Wrong material name " + itemID + " config.yml -> itemsToIgnore");
+                continue;
+            }
+            itemsToIgnore.add(Material.valueOf(itemID));
+        }
 
         //Punishment - Money
         moneyToTake = configuration.getDouble("moneyToTake");
