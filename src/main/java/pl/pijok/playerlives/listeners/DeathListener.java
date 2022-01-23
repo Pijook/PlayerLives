@@ -23,6 +23,13 @@ public class DeathListener implements Listener {
     public void onDeath(PlayerDeathEvent event){
         Player player = event.getEntity().getPlayer();
 
+        Debug.log(Settings.punishmentType);
+
+        if(Settings.punishmentType.equals(PunishmentType.DROP_ITEMS)){
+            event.setKeepInventory(true);
+            event.getDrops().clear();
+        }
+
         if(player.hasPermission("playerlives.bypass.death")){
             return;
         }
@@ -43,15 +50,9 @@ public class DeathListener implements Listener {
         if(lifeController.getPlayerLives(player.getName()) <= 0){
             lifeController.punishPlayer(player, Settings.punishmentType);
         }
-        else{
-            if(Settings.punishmentType.equals(PunishmentType.DROP_ITEMS)){
-                event.setKeepInventory(true);
-            }
-        }
 
         if(Settings.lifeSteal){
             if(event.getEntity().getKiller() != null){
-                Debug.log("Life steal enabled!");
                 Player killer = event.getEntity().getKiller();
 
                 if(lifeController.canGetAnotherLive(killer)){
@@ -63,10 +64,6 @@ public class DeathListener implements Listener {
 
             }
         }
-    }
-
-    @EventHandler
-    public void onKill(EntityDeathEvent event){
     }
 
 }

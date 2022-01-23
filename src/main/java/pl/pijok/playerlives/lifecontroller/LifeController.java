@@ -229,6 +229,7 @@ public class LifeController {
                     }
 
                     player.getWorld().dropItem(player.getLocation(), itemStack);
+                    player.getInventory().remove(itemStack);
                 }
             }
             else{
